@@ -41,6 +41,8 @@ class DataProvider with ChangeNotifier {
   List<WazirxModel> market = [];
   List<CoinDcxModel> marketDcx = [];
 
+  List<CoinDcxModel> inrDcxList =[];
+
   DataProvider() {
     fetchData();
   }
@@ -80,41 +82,10 @@ class DataProvider with ChangeNotifier {
           if (coinDcxMap.containsKey(market)) {
             temp.add(wazirxModel);
             temp2.add(coinDcxMap[market]!);
+
           }
         }
       }
-
-    /*  for (int i = 0; i < data2.length; i++) {
-        for (int j = 0; j < inrPairs.length; j++) {
-          if (inrPairs[j].toUpperCase() == data2[i]['market']) {
-            print("Symbol--${inrPairs[j]}");
-            CoinDcxModel coinDcxModel = CoinDcxModel.fromJson(data2[i]);
-
-            temp2.add(coinDcxModel);
-          }
-          if (usdtPairs[j].toUpperCase() == data2[i]['market']) {
-            print("Symbol--${inrPairs[j]}");
-            CoinDcxModel coinDcxModel = CoinDcxModel.fromJson(data2[i]);
-
-            temp2.add(coinDcxModel);
-          }
-        }
-      }
-      for (int i = 0; i < data.length; i++) {
-        for (int j = 0; j < inrPairs.length; j++) {
-          if (inrPairs[j] == data[i]['symbol']) {
-            print("Symbol-for-waz--${inrPairs[j]}");
-            WazirxModel wazirxModel = WazirxModel.fromJson(data[i]);
-            temp.add(wazirxModel);
-          }
-          if (usdtPairs[j] == data[i]['symbol']) {
-            print("Symbol-for-waz--${inrPairs[j]}");
-            WazirxModel wazirxModel = WazirxModel.fromJson(data[i]);
-
-            temp.add(wazirxModel);
-          }
-        }
-      }*/
 
       market = temp;
       marketDcx = temp2;
@@ -124,7 +95,7 @@ class DataProvider with ChangeNotifier {
       print("Error-hitting-api-with$error");
     }
 
-    Timer(const Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 3), () {
       // print("Fetch-data-called");
       fetchData();
     });

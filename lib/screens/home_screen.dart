@@ -1,3 +1,5 @@
+
+
 import 'package:crypto_price_tracker/data/models/coin_dcx_model.dart';
 import 'package:crypto_price_tracker/data/models/wazirx_model.dart';
 import 'package:crypto_price_tracker/provider/data_provider.dart';
@@ -16,10 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   static  const primaryDarkBgColor =  Color(0xff181735);
   static const primaryDarkCardColor =  Color(0xff282747);
   static const primaryLightTextColor =  Color(0xffFCFCFC);
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor:primaryDarkBgColor,
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        forceMaterialTransparency: true,
+        backgroundColor: primaryDarkBgColor,
+        elevation: 0,
+        title: const Text("Crypto price tracker",style: TextStyle(color: primaryLightTextColor,fontWeight: FontWeight.w800),),
       ),
       body: Column(
         children: [
@@ -61,13 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListView.builder(
                         itemCount: provider.market.length,
                         itemBuilder: (context, index) {
-                          // print("Data-found wazirx length ${provider.market.length} build at index --$index ");
-                          //print("Data-found dcx length ${provider.marketDcx.length} build at index --$index ");
-                          WazirxModel wazmodel = provider.market[index];
+                          WazirxModel wazModel = provider.market[index];
                           CoinDcxModel coinDcxModel = provider.marketDcx[index];
                           return marketUi(
                               coinDcxModel.market.toString(),
-                              wazmodel.askPrice.toString(), wazmodel.bidPrice.toString(),
+                              wazModel.askPrice.toString(), wazModel.bidPrice.toString(),
                               coinDcxModel.ask.toString(),coinDcxModel.bid.toString() );
                         },),
                     );
@@ -108,9 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Wazirx",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.white),),
-                      Text("Buy:-$wBuy",style: const TextStyle(fontSize: 12,color: Colors.green),),
-                      Text("Sell:-$wSell",style: const TextStyle(fontSize: 12,color: Colors.red),),
+                      const Text("Wazirx",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.white),),
+                      Text("Buy:-$wBuy",style: const TextStyle(fontSize: 12,color: Colors.green,fontWeight: FontWeight.w500),),
+                      Text("Sell:-$wSell",style: const TextStyle(fontSize: 12,color: Colors.red,fontWeight: FontWeight.w500),),
                     ],
                   ),
                 )),
@@ -121,9 +120,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("CoinDCX",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.white),),
-                      Text("Buy:-$dBuy",style: const TextStyle(fontSize: 12,color: Colors.green),),
-                      Text("Sell:-$dSell",style: const TextStyle(fontSize: 12,color: Colors.red),),
+                      const Text("CoinDCX",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.white),),
+                      Text("Buy:-$dBuy",style: const TextStyle(fontSize: 12,color: Colors.green,fontWeight: FontWeight.w500),),
+                      Text("Sell:-$dSell",style: const TextStyle(fontSize: 12,color: Colors.red,fontWeight: FontWeight.w500),),
                     ],
                   ),
                 )),
