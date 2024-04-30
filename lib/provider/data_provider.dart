@@ -1,47 +1,33 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:crypto_price_tracker/data/models/coin_dcx_model.dart';
-import 'package:crypto_price_tracker/data/models/wazirx_model.dart';
-import 'package:crypto_price_tracker/data/my_data.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../data/models/coin_dcx_model.dart';
+import '../data/models/wazirx_model.dart';
+import '../data/my_data.dart';
 
 class DataProvider with ChangeNotifier {
   ApiHelper apiHelper = ApiHelper();
 
   List<String> inrPairs = [
     'btcinr', 'ethinr', 'xrpinr', 'ltcinr', 'bchinr',
-    'maticinr', 'dogeinr', 'etcinr', 'trxinr', 'adausdt',
-    'shibusdt', 'xrpusdt', 'bchusdt', 'ethusdt', 'ltcusdt',
-    'maticusdt', 'dogeusdt', 'etcusdt', 'trxusdt', 'dotinr',
-    'solusdt', 'lunausdt', 'linkusdt', 'usdcusdt', 'avaxusdt',
-    'icpusdt', 'filusdt', 'venusdt', 'bttusdt', 'axsusdt',
-    'atomusdt', 'algousdt', 'crousdt', 'sprusdt', 'telusdt',
-    'uniinr', 'crvinr', 'aaveusdt', 'snxusdt', 'ksmusdt',
-    'chzusdt', 'icxusdt', 'sushiusdt', 'ftmusdt', 'daiusdt',
-    'mdxusdt', 'renusdt', 'batusdt'
+    'maticinr', 'dogeinr', 'etcinr', 'trxinr', 'uniinr'
   ];
 
   List<String> usdtPairs = [
     'btcusdt', 'ethusdt', 'xrpusdt', 'ltcusdt', 'bchusdt',
-    'maticusdt', 'dogeusdt', 'etcusdt', 'trxusdt', 'adausdt',
-    'shibusdt', 'dotusdt', 'solusdt', 'lunausdt', 'linkusdt',
-    'usdcusdt', 'avaxusdt', 'icpusdt', 'filusdt', 'venusdt',
-    'bttusdt', 'axsusdt', 'atomusdt', 'algousdt', 'crousdt',
-    'sprusdt', 'telusdt', 'uniusdt', 'crvusdt', 'aaveusdt',
-    'snxusdt', 'ksmusdt', 'chzusdt', 'icxusdt', 'sushiusdt',
-    'ftmusdt', 'daiusdt', 'mdxusdt', 'renusdt', 'batusdt',
-    'avaxusdt', 'ethinr', 'btcinr', 'maticinr', 'ltcinr',
-    'xrpinr', 'bchinr', 'dogeinr', 'etcinr', 'trxinr'
+    'maticusdt', 'dogeusdt', 'etcusdt', 'trxusdt', 'uniusdt'
   ];
-
 
   bool isLoading = true;
   List<WazirxModel> market = [];
   List<CoinDcxModel> marketDcx = [];
 
-  List<CoinDcxModel> inrDcxList =[];
+  List<CoinDcxModel> inrDcxList = [];
+  List<WazirxModel> inrWazList = [];
+  List<CoinDcxModel> usdtDcxList = [];
+  List<WazirxModel> usdtWazList = [];
 
   DataProvider() {
     fetchData();
@@ -57,6 +43,10 @@ class DataProvider with ChangeNotifier {
 
       List<WazirxModel> temp = [];
       List<CoinDcxModel> temp2 = [];
+      List<CoinDcxModel> inrTemp = [];
+      List<WazirxModel> inrTemp2 = [];
+      List<CoinDcxModel> usdtTemp = [];
+      List<WazirxModel> usdtTemp2 = [];
 
       // Create a map to store CoinDCX data by market symbol
       Map<String, CoinDcxModel> coinDcxMap = {};
@@ -82,20 +72,31 @@ class DataProvider with ChangeNotifier {
           if (coinDcxMap.containsKey(market)) {
             temp.add(wazirxModel);
             temp2.add(coinDcxMap[market]!);
-
+            // Check if the pair is INR or USDT and add to the corresponding list
+            if (inrPairs.contains(symbol)) {
+              inrTemp2.add(wazirxModel);
+              inrTemp.add(coinDcxMap[market]!);
+            } else if (usdtPairs.contains(symbol)) {
+              usdtTemp2.add(wazirxModel);
+              usdtTemp.add(coinDcxMap[market]!);
+            }
           }
         }
       }
 
       market = temp;
       marketDcx = temp2;
+      inrDcxList = inrTemp;
+      usdtDcxList = usdtTemp;
+      inrWazList = inrTemp2;
+      usdtWazList = usdtTemp2;
       isLoading = false;
       notifyListeners();
     } catch (error) {
       print("Error-hitting-api-with$error");
     }
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 10), () {
       // print("Fetch-data-called");
       fetchData();
     });
