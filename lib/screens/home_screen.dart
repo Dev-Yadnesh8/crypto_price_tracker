@@ -15,8 +15,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
-  static  const primaryDarkBgColor =  Color(0xff181735);
-  static const primaryDarkCardColor =  Color(0xff282747);
+  static  const primaryDarkBgColor =  Color(0x89111121);
+  static const primaryDarkCardColor =  Color(0xff222228);
   static const primaryLightTextColor =  Color(0xffFCFCFC);
 
   late TabController tabController;
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
         forceMaterialTransparency: true,
         backgroundColor: primaryDarkBgColor,
         elevation: 0,
-        title: const Text("Crypto price tracker",style: TextStyle(color: primaryLightTextColor,fontWeight: FontWeight.w800),),
+        title:const Text("Crypto price tracker",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800),)
       ),
       body:mainHomeUi()
 
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
             Expanded(
               flex: 2,
                 child: FittedBox(
-                    fit: BoxFit.scaleDown,
+              fit: BoxFit.scaleDown,
                     child: Text(pairName,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.white),))),
             const SizedBox(width: 12,),
             Expanded(

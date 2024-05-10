@@ -12,17 +12,28 @@ class DataProvider with ChangeNotifier {
 
   List<String> inrPairs = [
     'btcinr', 'ethinr', 'xrpinr', 'ltcinr', 'bchinr',
-    'maticinr', 'dogeinr', 'etcinr', 'trxinr', 'uniinr'
+    'maticinr', 'dogeinr', 'etcinr', 'trxinr', 'uniinr',
+    'solinr','linkinr', 'adainr', 'batinr', 'vetinr', 'avaxinr',
+    'dotinr', 'icpinr', 'fttinr', 'enjinr', 'atomrin',
+    'zilinr', 'filinr', 'chzinr', 'oninr', 'xlminr',
+    'lrcinr', 'ksminr', 'scinr', 'yfiiinr', 'daiinr'
   ];
 
   List<String> usdtPairs = [
     'btcusdt', 'ethusdt', 'xrpusdt', 'ltcusdt', 'bchusdt',
-    'maticusdt', 'dogeusdt', 'etcusdt', 'trxusdt', 'uniusdt'
+    'maticusdt', 'dogeusdt', 'etcusdt', 'trxusdt', 'uniusdt',
+    'solusdt', 'linkusdt', 'adausdt', 'batusdt', 'vetusdt',
+    'avaxusdt', 'dotusdt', 'icpusdt', 'fttusdt', 'enjusdt',
+    'atomusdt', 'zilusdt', 'filusdt', 'chzusdt', 'onusdt',
+    'xlmusdt', 'lrcusdt', 'ksmusdt', 'scusdt', 'yfiiusdt', 'daiusdt'
   ];
 
   bool isLoading = true;
+  String searchText = '';
   List<WazirxModel> market = [];
   List<CoinDcxModel> marketDcx = [];
+  List<dynamic> searchedList = [];
+
 
   List<CoinDcxModel> inrDcxList = [];
   List<WazirxModel> inrWazList = [];
@@ -91,7 +102,7 @@ class DataProvider with ChangeNotifier {
       inrWazList = inrTemp2;
       usdtWazList = usdtTemp2;
       isLoading = false;
-      notifyListeners();
+    notifyListeners();
     } catch (error) {
       print("Error-hitting-api-with$error");
     }
@@ -101,4 +112,6 @@ class DataProvider with ChangeNotifier {
       fetchData();
     });
   }
+
+
 }
