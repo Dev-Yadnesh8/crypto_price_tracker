@@ -107,7 +107,7 @@ class DataProvider with ChangeNotifier {
       print("Error-hitting-api-with$error");
     }
 
-    Timer(const Duration(seconds: 10), () {
+    Timer(const Duration(seconds: 1), () {
       // print("Fetch-data-called");
       fetchData();
     });
